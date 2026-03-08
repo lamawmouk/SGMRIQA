@@ -1,0 +1,29 @@
+# Data files (too large for git)
+Grounding/data/
+Grounding/data_generation/qa_reasoning_data/
+Grounding/data_processing/
+
+# Logs
+*.log
+Grounding/data_generation/*.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# OS
+.DS_Store
+
+# Claude
+.claude/
+
+# Evaluation outputs/data
+Grounding/evaluation/outputs/
+Grounding/evaluation/data/
+
+# Review sidecar files
+*_wrong_answers.json
+*_review_progress.json
+*.json.bak
