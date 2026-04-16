@@ -365,7 +365,7 @@
 
             <div class="is-size-5 publication-authors">
               <span class="author-block"><a href="#">Lama Moukheiber</a><sup>1</sup>,</span>
-              <span class="author-block"><a href="#">Caleb M. Yeung</a><sup>1,2,3</sup>,</span>
+              <span class="author-block"><a href="#">Caleb M. Yeung</a><sup>2,3</sup>,</span>
               <span class="author-block"><a href="#">Haotian Xue</a><sup>1</sup>,</span>
               <span class="author-block"><a href="#">Alec Helbling</a><sup>1</sup>,</span>
               <span class="author-block"><a href="#">Zelin Zhao</a><sup>1</sup>,</span>
@@ -430,14 +430,7 @@
       <div class="container page-container has-text-centered">
         <div class="volume-row">
           <div class="volume-item">
-            <canvas id="brain-canvas" width="320" height="320"></canvas>
-            <div class="volume-label">Brain MRI</div>
-            <div class="volume-sublabel">Craniotomy, dural thickening, encephalomalacia, lacunar infarct, WML</div>
-          </div>
-          <div class="volume-item">
-            <canvas id="knee-canvas" width="320" height="320"></canvas>
-            <div class="volume-label">Knee MRI</div>
-            <div class="volume-sublabel">Cartilage defect, displaced meniscus, joint effusion, meniscus tear</div>
+            <img src="static/figures/fig_task_examples.png" alt="Task examples across brain and knee MRI" style="width:100%; max-width:900px; border-radius:12px;">
           </div>
         </div>
       </div>
@@ -700,54 +693,6 @@
   <script>
     const COLORS = ['#00ff7f','#ff6464','#64b4ff','#ffd250','#c882ff','#ffa064','#64ffc8','#ff64c8'];
 
-    function initVolumeAnimation(canvasId, metaUrl, framesDir, speed) {
-      const canvas = document.getElementById(canvasId);
-      const ctx = canvas.getContext('2d');
-      let frames = [], meta = [], idx = 0;
-
-      fetch(metaUrl).then(r => r.json()).then(data => {
-        meta = data;
-        const labels = new Set();
-        meta.forEach(s => s.bboxes.forEach(b => labels.add(b.label)));
-        const colorMap = {};
-        [...labels].sort().forEach((l, i) => colorMap[l] = COLORS[i % COLORS.length]);
-
-        let loaded = 0;
-        meta.forEach((s, i) => {
-          const img = new Image();
-          img.onload = () => { loaded++; if (loaded === meta.length) startAnimation(); };
-          img.src = framesDir + '/' + String(i).padStart(3, '0') + '.png';
-          frames[i] = { img, bboxes: s.bboxes, colorMap };
-        });
-      });
-
-      function renderFrame() {
-        const f = frames[idx];
-        ctx.drawImage(f.img, 0, 0, 320, 320);
-        f.bboxes.forEach(bb => {
-          const color = f.colorMap[bb.label] || '#ffffff';
-          ctx.strokeStyle = color;
-          ctx.lineWidth = 2;
-          ctx.strokeRect(bb.x, bb.y, bb.width, bb.height);
-          ctx.font = '10px Google Sans, Helvetica, sans-serif';
-          const text = bb.label.slice(0, 30);
-          const tm = ctx.measureText(text);
-          const ly = Math.max(bb.y - 13, 0);
-          ctx.fillStyle = color;
-          ctx.fillRect(bb.x, ly, tm.width + 4, 13);
-          ctx.fillStyle = '#000';
-          ctx.fillText(text, bb.x + 2, ly + 10);
-        });
-      }
-
-      function startAnimation() {
-        renderFrame();
-        setInterval(() => { idx = (idx + 1) % frames.length; renderFrame(); }, speed);
-      }
-    }
-
-    initVolumeAnimation('brain-canvas', 'static/figures/frames/brain_meta.json', 'static/figures/frames/brain', 400);
-    initVolumeAnimation('knee-canvas', 'static/figures/frames/knee_meta.json', 'static/figures/frames/knee', 400);
   </script>
 
 </body>
