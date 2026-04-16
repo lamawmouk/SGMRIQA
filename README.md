@@ -1,4 +1,4 @@
-# SGMRI-QA: Multi-Frame Spatially Grounded Reasoning Across Volumetric MRI
+# Beyond a Single Frame: A Benchmark for Multi-Frame Spatially Grounded Visual Reasoning for MRI
 
 <p align="center">
   <a href="https://arxiv.org/abs/2512.16301">Paper (arXiv)</a> &nbsp;&middot;&nbsp;
@@ -21,7 +21,7 @@
 </p>
 
 
-SGMRI-QA is a benchmark for evaluating how well VLMs spatially ground findings in volumetric medical images, where reasoning must extend across dozens of sequential slices.
+SGMRI-VQA is a benchmark for evaluating how well VLMs spatially ground findings in volumetric medical images, where reasoning must extend across dozens of sequential slices.
 
 - **41,307 QA pairs** across brain and knee MRI with frame-indexed bounding boxes and chain-of-thought reasoning
 - **Hierarchical tasks**: detection &rarr; localization &rarr; counting/classification &rarr; captioning
@@ -218,12 +218,12 @@ bash scripts/slurm/submit_vqa_full_eval.sh
 | 9 | LLaVA-Med v1.5 | 7B | `hf_llava_med.py` |
 | 10 | MedGemma 1.5 | 4B | `hf_medgemma.py` |
 | | **Fine-Tuned (Ours)** | | |
-| 11 | [Qwen3-VL-8B-SGMRIQA-SFT](https://huggingface.co/lamamkh/Qwen3-8B-SGMRIQA-SFT) | 8B | `qwen3_vl_runner.py` |
+| 11 | [Qwen3-VL-8B-SGMRIVQA-SFT](https://huggingface.co/lamamkh/Qwen3-8B-SGMRIQA-SFT) | 8B | `qwen3_vl_runner.py` |
 
 ## Citation
 
 ```bibtex
-@inproceedings{moukheiber2026sgmriqa,
+@inproceedings{moukheiber2026sgmrivqa,
   title     = {Beyond a Single Frame: A Benchmark for Multi-Frame Spatially
                Grounded Visual Reasoning for {MRI}},
   author    = {Moukheiber, Lama and Yeung, Caleb M. and Xue, Haotian
