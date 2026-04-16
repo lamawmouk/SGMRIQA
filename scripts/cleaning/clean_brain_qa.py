@@ -666,6 +666,46 @@ BRAIN_IMAGING_CHARACTERISTICS = {
         'Post-therapeutic parenchymal changes with abnormal signal intensity are identified.',
         'Imaging findings consistent with prior treatment effect are noted in the brain.',
     ],
+    'paranasal sinus opacification': [
+        'Opacification of the paranasal sinuses is noted, consistent with mucosal thickening or retained secretions.',
+        'Paranasal sinus opacification with low signal intensity is identified, suggestive of mucosal disease.',
+        'Mucosal thickening with sinus opacification is seen in the paranasal sinuses.',
+        'The paranasal sinuses demonstrate opacification, consistent with mucosal thickening or a polyp.',
+        'Sinus opacification with signal characteristics suggesting fluid or mucosal thickening is observed.',
+        'Paranasal sinus mucosal thickening is noted, appearing as opacification of the sinus cavity.',
+        'Opacification of the paranasal sinuses is identified, likely representing mucosal disease or retained fluid.',
+        'The sinuses demonstrate opacification consistent with mucosal thickening, fluid, or polyp formation.',
+    ],
+    'paranasal sinus opacification_flair': [
+        'Hyperintense opacification of the paranasal sinuses is noted on FLAIR, consistent with mucosal thickening or retained secretions.',
+        'Paranasal sinus opacification with high FLAIR signal is identified, suggestive of mucosal disease.',
+        'Mucosal thickening with hyperintense sinus opacification is seen in the paranasal sinuses on FLAIR.',
+        'The paranasal sinuses demonstrate hyperintense opacification on FLAIR, consistent with mucosal thickening or a polyp.',
+        'Sinus opacification with high signal on FLAIR suggesting fluid or mucosal thickening is observed.',
+        'Paranasal sinus mucosal thickening is noted, appearing as hyperintense opacification on FLAIR.',
+        'Hyperintense opacification of the paranasal sinuses is identified on FLAIR, likely representing mucosal disease or retained fluid.',
+        'The sinuses demonstrate hyperintense opacification on FLAIR, consistent with mucosal thickening, fluid, or polyp formation.',
+    ],
+    'likely cysts': [
+        'A hypointense well-defined lesion is noted, consistent with an intracranial cyst.',
+        'A well-circumscribed hypointense structure is identified, suggestive of a cystic lesion.',
+        'A focal area of hypointense signal with well-defined margins is seen, consistent with a cyst.',
+        'A well-defined hypointense lesion is observed, likely representing an intracranial cyst.',
+        'A cystic-appearing hypointense lesion with smooth margins is noted.',
+        'A well-circumscribed lesion with hypointense signal characteristics is identified, consistent with a cyst.',
+        'A focal hypointense structure is seen with features consistent with an intracranial cyst.',
+        'A well-defined area of hypointense signal is noted, representing a likely cystic lesion.',
+    ],
+    'likely cysts_flair': [
+        'A hyperintense well-defined lesion is noted on FLAIR, consistent with an intracranial cyst.',
+        'A well-circumscribed hyperintense structure is identified on FLAIR, suggestive of a cystic lesion.',
+        'A focal area of hyperintense signal with well-defined margins is seen on FLAIR, consistent with a cyst.',
+        'A well-defined hyperintense lesion is observed on FLAIR, likely representing an intracranial cyst.',
+        'A cystic-appearing hyperintense lesion with smooth margins is noted on FLAIR.',
+        'A well-circumscribed lesion with hyperintense signal on FLAIR is identified, consistent with a cyst.',
+        'A focal hyperintense structure is seen on FLAIR, with features consistent with an intracranial cyst.',
+        'A well-defined area of hyperintense signal on FLAIR is noted, representing a likely cystic lesion.',
+    ],
 }
 
 
@@ -798,6 +838,83 @@ def enrich_detection_reasoning(qa):
     return count
 
 
+
+
+BRAIN_LABEL_TO_CHAR_KEY = {
+    'nonspecific white matter lesion': 'nonspecific white matter lesion',
+    'nonspecific lesion': 'nonspecific white matter lesion',
+    'craniotomy': 'craniotomy',
+    'enlarged ventricles': 'enlarged ventricles',
+    'edema': 'edema',
+    'dural thickening': 'dural thickening',
+    'resection cavity': 'resection cavity',
+    'lacunar infarct': 'lacunar infarct',
+    'encephalomalacia': 'encephalomalacia',
+    'mass': 'mass',
+    'extra-axial mass': 'extra-axial mass',
+    'extra-axial collection': 'extra-axial collection',
+    'craniectomy': 'craniectomy',
+    'craniectomy with cranioplasty': 'craniectomy with cranioplasty',
+    'pineal cyst': 'pineal cyst',
+    'possible artifact': 'possible artifact',
+    'motion artifact': 'motion artifact',
+    'posttreatment change': 'posttreatment change',
+    'paranasal sinus opacification': 'paranasal sinus opacification',
+    'likely cysts': 'likely cysts',
+}
+
+
+def enrich_volume_detection_reasoning(qa):
+    """Enrich volume-level detection reasoning to mention ALL ground-truth findings."""
+    count = 0
+    for e in qa:
+        if e.get('task') != 'detection' or e.get('level') != 'volume':
+            continue
+        gt = e.get('ground_truth', {})
+        if not isinstance(gt, dict):
+            continue
+        diagnoses = gt.get('final_diagnosis', [])
+        if len(diagnoses) <= 1:
+            continue
+
+        reasoning = e.get('reasoning', '')
+        reasoning_lower = reasoning.lower()
+        modality = e.get('modality', '').upper()
+
+        missing = []
+        for diag in diagnoses:
+            diag_lower = diag.lower()
+            if diag_lower in reasoning_lower:
+                continue
+            key_words = [w for w in diag_lower.split() if len(w) > 3]
+            if key_words and all(w in reasoning_lower for w in key_words):
+                continue
+            missing.append(diag)
+
+        if not missing:
+            continue
+
+        additions = []
+        for diag in missing:
+            char_key = BRAIN_LABEL_TO_CHAR_KEY.get(diag.lower())
+            if char_key is None:
+                continue
+            # Use FLAIR-specific descriptions when modality is FLAIR
+            flair_key = char_key + '_flair'
+            if 'FLAIR' in modality and flair_key in BRAIN_IMAGING_CHARACTERISTICS:
+                descs = BRAIN_IMAGING_CHARACTERISTICS[flair_key]
+            else:
+                descs = BRAIN_IMAGING_CHARACTERISTICS.get(char_key)
+            if descs:
+                additions.append(random.choice(descs))
+            else:
+                additions.append(f'Additionally, {diag.lower()} is identified.')
+
+        if additions:
+            e['reasoning'] = reasoning.rstrip('. ') + '. ' + ' '.join(additions)
+            count += 1
+
+    return count
 
 
 def add_classification_answer_letters(qa):

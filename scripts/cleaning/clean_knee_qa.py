@@ -749,6 +749,87 @@ def enrich_detection_reasoning(qa):
 
 
 
+KNEE_LABEL_TO_CHAR_KEY = {
+    'meniscus tear': 'meniscus tear',
+    'displaced meniscal tissue': 'displaced meniscal tissue',
+    'ligament - acl high grade sprain': 'acl',
+    'ligament - acl low grade sprain': 'acl',
+    'ligament - mcl high grade sprain': 'mcl',
+    'ligament - mcl low-mod grade sprain': 'mcl',
+    'ligament - pcl high grade': 'pcl',
+    'ligament - pcl low-mod grade sprain': 'pcl',
+    'lcl complex - low-mod grade sprain': 'lcl',
+    'lcl complex- high grade sprain': 'lcl',
+    'joint effusion': 'joint effusion',
+    'periarticular cysts': 'periarticular cyst',
+    'cartilage - full thickness loss/defect': 'cartilage - full thickness',
+    'cartilage - partial thickness loss/defect': 'cartilage - partial thickness',
+    'bone- subchondral edema': 'subchondral edema',
+    'bone-fracture/contusion/dislocation': 'fracture',
+    'bone - lesion': 'bone lesion',
+    'soft tissue lesion': 'soft tissue lesion',
+    'muscle strain': 'muscle strain',
+    'patellar retinaculum - high grade sprain': 'patellar retinaculum',
+    'joint bodies': 'joint bodies',
+}
+
+
+def enrich_volume_detection_reasoning(qa):
+    """Enrich volume-level detection reasoning to mention ALL ground-truth findings."""
+    count = 0
+    for e in qa:
+        if e.get('task') != 'detection' or e.get('level') != 'volume':
+            continue
+        gt = e.get('ground_truth', {})
+        if not isinstance(gt, dict):
+            continue
+        diagnoses = gt.get('final_diagnosis', [])
+        if len(diagnoses) <= 1:
+            continue
+
+        reasoning = e.get('reasoning', '')
+        reasoning_lower = reasoning.lower()
+
+        missing = []
+        for diag in diagnoses:
+            diag_lower = diag.lower()
+            # Check direct match
+            if diag_lower in reasoning_lower:
+                continue
+            # Key word match
+            key_words = [w for w in diag_lower.split() if len(w) > 3]
+            if key_words and all(w in reasoning_lower for w in key_words):
+                continue
+            # Abbreviation match
+            for abbr in ['acl', 'mcl', 'pcl', 'lcl']:
+                if abbr in diag_lower and abbr in reasoning_lower:
+                    break
+            else:
+                missing.append(diag)
+                continue
+            # abbr was found, skip
+
+        if not missing:
+            continue
+
+        additions = []
+        for diag in missing:
+            char_key = KNEE_LABEL_TO_CHAR_KEY.get(diag.lower())
+            if char_key is None:
+                continue
+            descs = KNEE_IMAGING_CHARACTERISTICS.get(char_key)
+            if descs:
+                additions.append(random.choice(descs))
+            else:
+                additions.append(f'Additionally, {diag.lower()} is identified.')
+
+        if additions:
+            e['reasoning'] = reasoning.rstrip('. ') + '. ' + ' '.join(additions)
+            count += 1
+
+    return count
+
+
 def add_classification_answer_letters(qa):
     """Add answer letter references (A), (B), etc. to classification answers."""
     count = 0
