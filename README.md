@@ -67,10 +67,6 @@ All values in %. Best in **bold**, second best in <ins>underline</ins>.
 | Qwen2.5-VL-7B | 24.18 | 25.27 | 62.54 | 0.07 | 15.63 | 16.67 | 24.06 |
 | **Ours** (Qwen3-VL-8B-FT) | **99.18** | **37.77** | **97.70** | **5.97** | **28.24** | **26.54** | **49.23** |
 
-<p align="center">
-  <img src="assets/ep2_sft_combined_bbox_results.png" width="100%">
-</p>
-
 ## Project Structure
 
 ```
