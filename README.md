@@ -2,13 +2,13 @@
 
 <p align="center">
   <a href="https://arxiv.org/abs/2512.16301">Paper (arXiv)</a> &nbsp;&middot;&nbsp;
-  <a href="https://sgmri-qa.github.io">Project Page</a> &nbsp;&middot;&nbsp;
+  <a href="https://lamawmouk.github.io/SGMRIQA">Project Page</a> &nbsp;&middot;&nbsp;
   <a href="https://huggingface.co/lamamkh/Qwen3-8B-SGMRIQA-SFT">Model Weights</a>
 </p>
 
 <p align="center">
   <b>Lama Moukheiber</b><sup>1</sup> &middot;
-  <b>Caleb M. Yeung</b><sup>2</sup> &middot;
+  <b>Caleb M. Yeung</b><sup>1,2</sup> &middot;
   <b>Haotian Xue</b><sup>1</sup> &middot;
   <b>Alec Helbling</b><sup>1</sup> &middot;
   <b>Zelin Zhao</b><sup>1</sup> &middot;
