@@ -1,7 +1,7 @@
 #!/bin/bash
 # Monitor volume QA sessions and launch image QA sessions when all complete
 
-WORKDIR="/Users/lamam/Desktop/VLM_grounding/Grounding/data_generation"
+WORKDIR="${SGMRIQA_DATA_GENERATION:-data_generation}"
 OUTDIR="$WORKDIR/qa_reasoning_data"
 cd "$WORKDIR"
 

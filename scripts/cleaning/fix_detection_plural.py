@@ -281,7 +281,7 @@ def _load_volume_bbox_counts(meta_path):
     return vol_bbox_counts
 
 
-DATA_PROC = '/Users/lamam/Desktop/VLM_grounding/Grounding/data_processing'
+DATA_PROC = os.environ.get('SGMRIQA_DATA_PROCESSING', 'data_processing')
 
 
 def main():
