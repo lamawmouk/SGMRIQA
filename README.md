@@ -206,23 +206,23 @@ bash scripts/slurm/submit_vqa_full_eval.sh
 
 ## Evaluated Models
 
-| | Model | Params | Type | Runner |
-|---|-------|--------|------|--------|
-| | **Proprietary** | | | |
-| 1 | GPT-4o | &mdash; | API | `api_openai.py` |
-| 2 | Gemini 2.5 Pro | &mdash; | API | `api_gemini.py` |
-| 3 | Gemini 2.5 Flash | &mdash; | API | `api_gemini.py` |
-| | **Open-Source** | | | |
-| 4 | LLaVA-Video-7B | 7B | HF | `llava_video_runner.py` |
-| 5 | Eagle 2.5 | 8B | HF | `eagle_runner.py` |
-| 6 | Qwen3-VL | 8B | vLLM | `qwen3_vl_runner.py` |
-| 7 | InternVL 2.5 | 8B | HF | `internvl_runner.py` |
-| 8 | Qwen2.5-VL | 7B | vLLM | `qwen2_vl_runner.py` |
-| | **Medical** | | | |
-| 9 | LLaVA-Med v1.5 | 7B | HF | `hf_llava_med.py` |
-| 10 | MedGemma 1.5 | 4B | HF | `hf_medgemma.py` |
-| | **Fine-Tuned (Ours)** | | | |
-| 11 | [Qwen3-VL-8B-SGMRIQA-SFT](https://huggingface.co/lamamkh/Qwen3-8B-SGMRIQA-SFT) | 8B | vLLM | `qwen3_vl_runner.py` |
+| | Model | Params | Runner |
+|---|-------|--------|--------|
+| | **Proprietary** | | |
+| 1 | GPT-4o | &mdash; | `api_openai.py` |
+| 2 | Gemini 2.5 Pro | &mdash; | `api_gemini.py` |
+| 3 | Gemini 2.5 Flash | &mdash; | `api_gemini.py` |
+| | **Open-Source** | | |
+| 4 | LLaVA-Video-7B | 7B | `llava_video_runner.py` |
+| 5 | Eagle 2.5 | 8B | `eagle_runner.py` |
+| 6 | Qwen3-VL | 8B | `qwen3_vl_runner.py` |
+| 7 | InternVL 2.5 | 8B | `internvl_runner.py` |
+| 8 | Qwen2.5-VL | 7B | `qwen2_vl_runner.py` |
+| | **Medical** | | |
+| 9 | LLaVA-Med v1.5 | 7B | `hf_llava_med.py` |
+| 10 | MedGemma 1.5 | 4B | `hf_medgemma.py` |
+| | **Fine-Tuned (Ours)** | | |
+| 11 | [Qwen3-VL-8B-SGMRIQA-SFT](https://huggingface.co/lamamkh/Qwen3-8B-SGMRIQA-SFT) | 8B | `qwen3_vl_runner.py` |
 
 ## Citation
 
