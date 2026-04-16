@@ -8,7 +8,7 @@
 
 <p align="center">
   <b>Lama Moukheiber</b><sup>1</sup> &middot;
-  <b>Caleb M. Yeung</b><sup>1,2</sup> &middot;
+  <b>Caleb M. Yeung</b><sup>2,3</sup> &middot;
   <b>Haotian Xue</b><sup>1</sup> &middot;
   <b>Alec Helbling</b><sup>1</sup> &middot;
   <b>Zelin Zhao</b><sup>1</sup> &middot;
@@ -17,7 +17,8 @@
 
 <p align="center">
   <sup>1</sup>Georgia Institute of Technology &nbsp;&nbsp;
-  <sup>2</sup>Harvard University
+  <sup>2</sup>Harvard University &nbsp;&nbsp;
+  <sup>3</sup>Georgetown University
 </p>
 
 
