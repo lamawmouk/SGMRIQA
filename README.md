@@ -83,8 +83,8 @@ SGMRIQA/
 │   ├── preprocessing/        #   fastMRI+ data processing (brain + knee)
 │   ├── generation/           #   GPT-4o QA pair generation
 │   ├── cleaning/             #   Clinician-guided QA data cleaning
+│   ├── finetuning/           #   Qwen3-VL-8B SFT training + data conversion
 │   └── slurm/                #   HPC job scripts
-├── tests/
 ├── pyproject.toml
 └── README.md
 ```
@@ -94,7 +94,7 @@ SGMRIQA/
 ```bash
 git clone https://github.com/lamawmouk/SGMRIQA.git
 cd SGMRIQA
-pip install -e ".[dev]"
+pip install -e .
 ```
 
 Create a `.env` file with your API keys (for proprietary model inference and AR-Score evaluation):

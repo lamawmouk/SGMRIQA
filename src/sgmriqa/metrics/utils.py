@@ -311,12 +311,8 @@ def parse_structured_output(text: str):
     """Try to parse structured JSON from model output.
 
     Returns dict with 'reasoning', 'answer', 'bboxes' keys, or None.
+    Not used in minimal prompt mode (which is what all paper results use).
     """
-    from sgmriqa.schemas import parse_model_response
-
-    parsed = parse_model_response(text)
-    if parsed:
-        return parsed.model_dump()
     return None
 
 
