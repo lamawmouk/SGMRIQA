@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="description" content="Beyond a Single Frame: Multi-Frame Spatially Grounded Reasoning Across Volumetric MRI">
-  <meta name="keywords" content="SGMRI-QA, MRI, Visual Grounding, VQA, Benchmark">
+  <meta name="keywords" content="SGMRI-VQA, MRI, Visual Grounding, VQA, Benchmark">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Beyond a Single Frame: Multi-Frame Spatially Grounded Reasoning Across Volumetric MRI</title>
 
@@ -403,11 +403,11 @@
             </div>
 
             <p class="hero-subtitle">
-              <strong>SGMRI-QA (Spatially Grounded MRI Question Answering)</strong> evaluates whether vision-language models can spatially ground their clinical findings across volumetric MRI, providing frame-indexed bounding boxes alongside chain-of-thought reasoning.
+              <strong>SGMRI-VQA (Spatially Grounded MRI Visual Question Answering)</strong> evaluates whether vision-language models can spatially ground their clinical findings across volumetric MRI, providing frame-indexed bounding boxes alongside chain-of-thought reasoning.
             </p>
 
             <div class="hero-subtitle" style="margin-top: 0.8rem;">
-              Feed a full brain or knee MRI volume, and SGMRI-QA tests detection, localization, classification, counting, and captioning&mdash;requiring models to reason about <em>what</em> is present, <em>where</em> it is, and <em>across which frames</em> it extends.
+              Feed a full brain or knee MRI volume, and SGMRI-VQA tests detection, localization, classification, counting, and captioning&mdash;requiring models to reason about <em>what</em> is present, <em>where</em> it is, and <em>across which frames</em> it extends.
             </div>
 
           </div>
@@ -491,7 +491,7 @@
           <span class="pill">Benchmark</span>
           <h2 class="title is-3">Hierarchical Task Structure</h2>
           <p class="section-intro">
-            SGMRI-QA organizes tasks hierarchically to mirror clinical reading. At the volume level, models process the full 3D scan as a multi-frame sequence. Each QA pair couples a clinician-aligned <strong>chain-of-thought reasoning trace</strong> with <strong>frame-indexed bounding box coordinates</strong>.
+            SGMRI-VQA organizes tasks hierarchically to mirror clinical reading. At the volume level, models process the full 3D scan as a multi-frame sequence. Each QA pair couples a clinician-aligned <strong>chain-of-thought reasoning trace</strong> with <strong>frame-indexed bounding box coordinates</strong>.
           </p>
 
           <div class="figure-frame" style="margin-top: 2rem;">
@@ -516,7 +516,7 @@
           <span class="pill">Data</span>
           <h2 class="title is-3">Dataset Composition</h2>
           <p class="section-intro">
-            Built on expert radiologist annotations from the <strong>fastMRI+</strong> dataset, SGMRI-QA covers 1,970 MRI volumes (996 brain, 974 knee) with 32,142 image-level and 9,165 volume-level QA pairs.
+            Built on expert radiologist annotations from the <strong>fastMRI+</strong> dataset, SGMRI-VQA covers 1,970 MRI volumes (996 brain, 974 knee) with 32,142 image-level and 9,165 volume-level QA pairs.
           </p>
 
           <div class="figure-frame" style="margin-top: 2rem;">
@@ -675,7 +675,7 @@
         <div class="column is-four-fifths">
           <h2 class="title is-3 has-text-centered">BibTeX</h2>
           <div class="figure-frame">
-<pre><code>@inproceedings{moukheiber2026sgmriqa,
+<pre><code>@inproceedings{moukheiber2026sgmrivqa,
   title     = {Beyond a Single Frame: A Benchmark for Multi-Frame Spatially
                Grounded Visual Reasoning for MRI},
   author    = {Moukheiber, Lama and Yeung, Caleb M. and Xue, Haotian
